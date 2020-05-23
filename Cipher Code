@@ -1,0 +1,8 @@
+def cipher(map_from,map_to,code):
+    key_code = {}
+    decoded = ""
+    for i in range(len(map_from)):
+        i = key_code.index(map_from)
+    for character in code:
+        decoded = decoded+ character
+    return(key_code, decoded)
