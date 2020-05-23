@@ -1,0 +1,151 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Mar 25 09:47:36 2020
+
+@author: patelkk
+"""
+
+import numpy as np
+
+'''
+This code will let you play rock, paper, scissors with the computer.
+You will have the ability to choose your item, while the computer's will
+be randomly decided. First one to 5 points wins! There will be a play
+again element in this as well.
+'''
+print("Welcome to Xtreme Rock,Paper,Scissors")
+
+PlayAgain = True
+my_points = 0
+comp_points = 0
+
+
+while PlayAgain:
+    choices = ["rock", "paper", "scissors","Rock", "Paper", "Scissors"]
+    comp_turn = np.random.choice(choices)
+    my_turn = input("Which item will you choose? rock, paper, or scissors?: ")
+    if my_turn not in choices:
+        input("This is not a valid move. Please enter a valid move: ")
+    
+    
+    if comp_turn == "rock" and my_turn == "scissors":
+        comp_points += 1
+        print("You lost this round! The Computer has", comp_points, "points. You have", my_points, "points")
+    if comp_points or my_points == 5:
+        if comp_points == 5:
+            print("Game Over! The Computer won!")
+            PlayAgain = False
+        elif my_points == 5:
+            print("Game Over! You won!")
+            PlayAgain = False
+    
+    
+    if comp_turn == "rock" and my_turn == "paper":
+        my_points += 1
+        print("You won this round! The Computer has", comp_points, "points. You have", my_points, "points")
+    if comp_points or my_points == 5:
+        if comp_points == 5:
+            print("Game Over! The Computer won!")
+            PlayAgain = False
+        elif my_points == 5:
+            print("Game Over! You won!")
+            PlayAgain = False
+    
+    
+    if comp_turn == "rock" and my_turn == "rock":
+        print("This round was a tie! The Computer has", comp_points, "points. You have", my_points, "points")
+    if comp_points or my_points == 5:
+        if comp_points == 5:
+            print("Game Over! The Computer won!")
+            PlayAgain = False
+        elif my_points == 5:
+            print("Game Over! You won!")
+            PlayAgain = False
+    
+    
+    if comp_turn == "paper" and my_turn == "scissors":
+        my_points += 1
+        print("You won this round! The Computer has", comp_points, "points. You have", my_points, "points")
+    if comp_points or my_points == 5:
+        if comp_points == 5:
+            print("Game Over! The Computer won!")
+            PlayAgain = False
+        elif my_points == 5:
+            print("Game Over! You won!")
+            PlayAgain = False
+            
+            
+    if comp_turn == "paper" and my_turn == "paper":
+        print("This round was a tie! The Computer has", comp_points, "points. You have", my_points, "points")
+    if comp_points or my_points == 5:
+        if comp_points == 5:
+            print("Game Over! The Computer won!")
+            PlayAgain = False
+        elif my_points == 5:
+            print("Game Over! You won!")
+            PlayAgain = False
+            
+            
+    if comp_turn == "paper" and my_turn == "rock":
+        comp_points += 1
+        print("You lost this round! The computer has", comp_points,"points. You have", my_points, "points")
+    if comp_points or my_points == 5:
+        if comp_points == 5:
+            print("Game Over! The Computer won!")
+            PlayAgain = False
+        elif my_points == 5:
+            print("Game Over! You won!")
+            PlayAgain = False
+    
+    
+    if comp_turn == "scissors" and my_turn == "scissors":
+        print("This round was a tie! The Computer has", comp_points, "points. You have", my_points, "points")
+    if comp_points or my_points == 5:
+        if comp_points == 5:
+            print("Game Over! The Computer won!")
+            PlayAgain = False
+        elif my_points == 5:
+            print("Game Over! You won!")
+            PlayAgain = False
+            
+    if comp_turn == "scissors" and my_turn == "paper":
+        comp_points += 1
+        print("You lost this round! The computer has", comp_points,"points. You have", my_points, "points")
+    if comp_points or my_points == 5:
+        if comp_points == 5:
+            print("Game Over! The Computer won!")
+            PlayAgain = False
+        elif my_points == 5:
+            print("Game Over! You won!")
+            PlayAgain = False
+            
+            
+    if comp_turn == "scissors" and my_turn == "rock":
+        my_points += 1
+        print("You won this round! The Computer has", comp_points, "points. You have", my_points, "points")
+    if comp_points or my_points == 5:
+        if comp_points == 5:
+            print("Game Over! The Computer won!")
+            PlayAgain = False
+        elif my_points == 5:
+            print("Game Over! You won!")
+            PlayAgain = False
+            
+            
+    
+    query = input("Do you want to play again? Yes or No?: ")
+    if query != "Yes" or query != "No":
+        input("This is not a valid input. Please enter Yes or No: ")
+    query.lower()
+    if query == "no":
+        PlayAgain = False
+        print("Thank You for playing Xtreme Rock, Paper, Scissors!")
+    else:
+        PlayAgain = True
+            
+    
+    
+    
+    
+    
+    
