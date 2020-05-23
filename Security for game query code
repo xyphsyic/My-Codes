@@ -1,0 +1,12 @@
+PlayAgain = True
+
+while PlayAgain:
+    try: 
+        userinput = input("Do you want to play again?")
+        userinput = userinput.lower()
+        if userinput != "yes" and userinput != "no":
+            raise ValueError
+        PlayAgain = False
+        print("Thanks for choosing", userinput)
+    except:
+        print("Please enter yes or no, you big bot, yes YOU!")
