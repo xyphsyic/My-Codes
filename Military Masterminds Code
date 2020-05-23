@@ -1,0 +1,94 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Mar 18 12:11:31 2020
+
+@author: patelkk
+"""
+import numpy as np
+from datascience import *
+
+print("Welcome to Military Masterminds")
+'''
+This is a tactical game played with two people, where each player will get 10 cards 
+at random. There are two different kinds of cards, Army cards and Special cards
+Each army card will have a certain rank, Ranks will be from 1-9, with 1 being the 
+highest. Each card will be of a military position and the higher rank card will
+overthrow the lower rank card, and the person with the higher rank card will be
+awarded a point. There will also be bomb cards, which can kill any position except
+a Miner(Rank 8) and there will be a Spy, which can be killed by anyone in the game, 
+but if it faces off against the marshall(Rank 1), it will kill the marshall. 
+A card may only be used once. First player to 5 points wins!!!
+'''
+
+scout = 9
+miner = 8
+sargent= 7
+lieutenant= 6
+captain = 5
+major = 4
+general = 3
+colonel = 2
+marshall = 1 
+bomb = 0
+spy = "spy"
+
+
+all_cards = [scout, scout, scout, scout, miner, miner, miner, miner, sargent, sargent, sargent, lieutenant, lieutenant, lieutenant, captain,captain,captain, major, major, general, general, colonel, marshall, spy, bomb, bomb, bomb,bomb,bomb]
+deck = []
+player1_deck = np.random.sample(all_cards, 10)
+player2_deck = np.random.sample(all_cards, 10)
+
+
+player_num = input("Please state your player number(Either 1 or 2): ")
+if player_num == "1":
+    deck = player1_deck
+elif player_num == "2":
+    deck = player2_deck
+else:
+    print("Please enter a valid player number!")
+play_again = True
+while play_again:
+    turn1 = input("Choose one of your cards to attack with. Please state the name of your card: ")
+    turn1.lower()
+    turn2 = input("Choose one of your cards to defend with. Please state the name of your card: ")
+    turn2.lower()
+    if turn1 in deck:
+        if turn1 == "scout":
+            turn1 = 9
+            deck.remove("scout")
+        elif turn1 == "miner":
+            turn1 = 8
+            deck.remove("miner")
+        elif turn1 == "sargent":
+            turn1 = 7
+            deck.remove("sargent")
+        elif turn1 == "lieutenant":
+            turn1 = 6
+            deck.remove("lieutenant")
+        elif turn1 == "captain":
+            turn1 = 5
+            deck.remove("captain")
+        elif turn1 == "major":
+            turn1 = 4
+            deck.remove("major")
+        elif turn1 == "general":
+            turn1 = 3
+            deck.remove("general")
+        elif turn1 == "colonel":
+            turn1 = 2
+            deck.remove("colonel")
+        elif turn1 == "marshall":
+            turn1 = 1
+            deck.remove("marshall")
+        elif turn1 == "spy":
+            turn1 = "spy"
+            deck.remove("spy")
+        else:
+            turn1 = 0
+            deck.remove("bomb")
+
+
+# Continue Code Here...
+        
+        
+
