@@ -1,0 +1,11 @@
+def max_val(t):
+    highestvalue = 0
+    for i in range(t):
+        if type(i) == int:
+            if i > highestvalue:
+                highestvalue = i
+        else:
+            tempvalue = max_val(i)
+            if tempvalue > highestvalue:
+                highestvalue = tempvalue
+    return highestvalue 
