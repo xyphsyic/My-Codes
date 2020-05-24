@@ -1,0 +1,29 @@
+#include<conio.h>
+#include<stdio.h>
+
+void main()
+{
+ long int n,i,j,neel;
+ clrscr();
+
+ printf("Enter number:");
+ scanf("%ld", & n);
+ printf(" ");
+
+ for(i=1;i<=n;i++)
+ {
+  for(j=1;j<=i;j++)
+  {
+   if(i%j==0)
+   neel++;
+   if(neel==3)
+   break;
+  }
+  if(neel<=2)
+  printf("%ld", i);
+  neel=0;
+
+ }
+
+getch();
+}
