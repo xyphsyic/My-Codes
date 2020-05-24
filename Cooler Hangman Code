@@ -1,0 +1,424 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Oct 26 12:52:51 2019
+
+@author: patelkk
+"""
+
+# Hangman game
+# -------------------------------------
+#Helper Code
+#You don't need to understand this helper Code
+#but make sure to read the docstrings
+#Descriptions of what the functions do
+import random
+import time
+
+print(chr(12))
+WORDLIST_FILENAME = "words.txt"
+
+def loadWords():
+    """
+    Returns a list of valid words. Words are strings of lowercase letters.
+    
+    Depending on the size of the word list, this 
+    function may take a while to finish
+    """
+    print("Loading word list from file...")
+    # inFile : file
+    inFile = open(WORDLIST_FILENAME, 'r')
+    #line : string
+    line = inFile.readline()
+    #wordlist: list of strings
+    wordlist = line.split()
+    print(" ", len(wordlist), "words loaded,")
+    return wordlist
+
+def chooseWord(wordlist):
+    """
+    wordlist (list) : list of words (strings)
+    
+    Returns a word from wordlist at random
+    """
+    return random.choice(wordlist)
+#end of helper code
+# ---------------------------------------
+#Load the list of words into the variables wordlist
+# so that it can ve accessed from anywhere in the program
+wordlist = loadWords()
+    
+def isWordGuessed(secretWord, lettersGuessed):
+    '''
+    secretWord is the word the user is guessing
+    lettersGuessed is the list of what letters have been guessed
+    returns: boolean, True if all the letters of scretWord are in lettersGuessed
+    False otherwise
+    '''
+    # print(lettersGuessed)
+    for letter in secretWord:
+        # print(letter)
+        if letter not in lettersGuessed:
+            return False
+    return True
+
+def getGuessedWord(secretWord, lettersGuessed):
+    '''
+    secretWord: the word user is guessing
+    lettersGuessed is the list of what letters have been guessed
+    returns: strings, comprised of letters and underscores that represents what letters in secretWord
+    have been guessed so far.
+    '''
+    output = ""
+    for letter in secretWord:
+        if letter in lettersGuessed:
+            output += letter
+        else:
+            output += "-"
+    return output
+
+def getAvailableLetters(lettersGuessed):
+    '''
+    lettersGuessed is the list of whta letters have been guessed so far
+    returns: the word with the letters that represents what letters have not yet been guessed.
+    '''
+    alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    output = ""
+    for letter in alphabet:
+        if letter not in lettersGuessed:
+            output += letter
+    return output
+
+def hangman(secretWord):
+    '''
+    secretWord is the word that is being guessed
+    starts up an interactive game of hangman
+    '''
+    PlayAgain = True
+    timesplayed = 1
+    while PlayAgain:
+        starttime = time.time()
+        print(chr(12))
+        print("Welcome to Hangman!")
+        print("Round", timesplayed)
+        print('\n\n')
+        guessesAllowed = int(float(input("How many guesses shouw I allow?(8 Recommended)\n\t")))
+        print("I am thinking of a word that is", len(secretWord), "letters long.")
+        mistakeMade = 0
+        correctGuess = 0
+        remainingGuesses = guessesAllowed-mistakeMade
+        score = 0
+        oops = 0
+        lettersGuessed = []
+        keepGoing = True
+        
+        while keepGoing:
+            if remainingGuesses == 1:
+                drawing = '''
+                 ___________.._______
+| .__________))______|
+| | / /      ||
+| |/ /       ||
+| | /        ||.-''.    [plz don't get this one wrong. Only 1 left!]
+| |/         |/ O O \  /
+| |          ||  .  | /
+| |          (\\===_'
+| |         .-`--'.
+| |        /Y     Y\
+| |       // |   | \\
+| |      //  |   |  \\
+| |     ')   |   |   (`
+| |          ||-||
+| |          || ||
+| |          || ||
+| |          || ||
+| |         / | 
+'''
+            if remainingGuesses == 2:
+              drawing = '''
+                ___________.._______
+| .__________))______|
+| | / /      ||
+| |/ /       ||
+| | /        ||.-''.    [Come on! just 2 guesses left!]
+| |/         |/ O O \  /
+| |          ||  .  | /
+| |          (\\===_'
+| |         .-`--'.
+| |        /Y     Y\
+| |       // |   | \\
+| |      //  |   |  \\
+| |     ')   |   |   (`
+| |          ||-||
+| |          || ||
+| |          || ||
+| |          || ||
+| |                   
+'''     
+            if remainingGuesses == 3:
+                drawing = '''
+                    ___________.._______
+| .__________))______|
+| | / /      ||
+| |/ /       ||
+| | /        ||.-''.    [quickly, dude! only 3 left!]
+| |/         |/ O O \  /
+| |          ||  .  | /
+| |          (\\===_'
+| |         .-`--'.
+| |        /Y     Y\
+| |       // |   | \\
+| |      //  |   |  \\
+| |     ')   |   |   (`
+| |          ||
+| |          || 
+| |          || 
+| |          || 
+| |                 
+'''
+            if remainingGuesses == 4:
+                drawing = '''
+                  ___________.._______
+| .__________))______|
+| | / /      ||
+| |/ /       ||
+| | /        ||.-''.    [ OK buddy, 4 guesses left!]
+| |/         |/ O O \  /
+| |          ||  .  | /
+| |          (\\===_'
+| |         .-`--'.
+| |        /Y     Y\
+| |       // |   | \\
+| |      //  |   |  \\
+| |     ')   |   |   (`
+| |          
+| |           
+| |           
+| |           
+| |               
+'''
+            if remainingGuesses == 5:
+                drawing = '''
+                  ___________.._______
+| .__________))______|
+| | / /      ||
+| |/ /       ||
+| | /        ||.-''.    [ Don't sweat, 5 guesses left!]
+| |/         |/ O O \  /
+| |          ||  .  | /
+| |          (\\===_'
+| |         .-`--'.
+| |        /Y    | \
+| |       // |   | 
+| |      //  |   |  
+| |     ')   |   |   
+| |          
+| |           
+| |           
+| |           
+| |             
+'''
+            if remainingGuesses == 6:
+                drawing = '''
+                  ___________.._______
+| .__________))______|
+| | / /      ||
+| |/ /       ||
+| | /        ||.-''.    [ That's fine, 6 guesses left!]
+| |/         |/ O O \  /
+| |          ||  .  | /
+| |          (\\===_'
+| |         .-`--'.
+| |        /     | \
+| |          |   | 
+| |          |   |  
+| |          |   |   
+| |          
+| |           
+| |           
+| |           
+| |   
+'''
+            if remainingGuesses == 7:
+                drawing = '''
+                  ___________.._______
+| .__________))______|
+| | / /      ||
+| |/ /       ||
+| | /        ||.-''.    [ Good Try, 7 guesses left!]
+| |/         |/ O O \  /
+| |          ||  .  | /
+| |          (\\===_'
+| |         
+| |
+| |          
+| |           
+| |            
+| |          
+| |           
+| |           
+| |           
+| |   
+'''
+            if remainingGuesses >= 8:
+                drawing = '''
+                 ___________.._______
+| .__________))______|
+| | / /      
+| |/ /
+| | /        
+| |/         
+| |          
+| |          
+| |         
+| |
+| |          
+| |           
+| |            
+| |          
+| |           
+| |           
+| |           
+| |  
+'''
+            print(drawing)
+            if isWordGuessed(secretWord, lettersGuessed):
+                print("-----------")
+                print("Congratulations, you won!")
+                keepGoing = False
+            else:
+                print("-----------")
+                print("You have", remainingGuesses, "guesses left.")
+                print("Available letters: ", getAvailableLetters(lettersGuessed))
+                guess = str(input("Please guess a letter: ")).lower()
+                guess = guess[0]
+                if guess in secretWord and guess not in lettersGuessed:
+                    lettersGuessed.append(guess)
+                    print(chr(12))
+                    print("Good guess: ", getGuessedWord(secretWord, lettersGuessed))
+                    correctGuess += 1
+                elif guess in lettersGuessed:
+                    print(chr(12))
+                    print("Oops! You've already guessed that letter: ", getGuessedWord(secretWord, lettersGuessed))
+                    oops += 1
+                    if oops > 2:
+                        print("You have made this mistake", oops, "times. I'm penalizing you a guess.")
+                        mistakeMade += 1
+                        remainingGuesses = guessesAllowed-mistakeMade
+                        
+                    elif guess not in secretWord:
+                        print(chr(12))
+                        print("Oh, what a shame! That letter is not in my word: ", getGuessedWord(secretWord, lettersGuessed))
+                        lettersGuessed.append(guess)
+                        remainingGuesses = guessesAllowed-mistakeMade
+                if remainingGuesses <= 0:
+                    print(chr(12))
+                    print("-----------")
+                    print("What a bummer, you ran out of guesses. The word was", secretWord)
+                    drawing = '''
+                  ___________.._______
+| .__________))______|
+| | / /      ||
+| |/ /       ||
+| | /        ||.-''.    [Ugh! I'm dead!!!]
+| |/         |/ X X \  /
+| |          ||  .  | /
+| |          (\\===_'
+| |         .-`--'.
+| |        /Y     Y\
+| |       // |   | \\
+| |      //  |   |  \\
+| |     ')   |   |   (`
+| |          ||-||
+| |          || ||
+| |          || ||
+| |          || ||
+| |         / | | \
+'''
+                    print(drawing)
+                    keepGoing = False
+                    print("==================================================")
+                    stoptime = time.time()
+                    totaltime = round(stoptime - starttime,1)
+                    print("It took you", totaltime, "seconds to complete the game.")
+                    gameoverword = getGuessedWord(secretWord, lettersGuessed)
+                    countme = 0
+                    for character in gameoverword:
+                        if character == "-":
+                            countme += 1
+                    percentCorrect = 1 -(countme/len(secretWord))
+                    score = (percentCorrect * 15) + correctGuess + (remainingGuesses * (remainingGuesses/guessesAllowed))
+                    score = round(score)
+                    print("Percent correct: ", percentCorrect*100,"%", sep="")
+                    
+                    if totaltime < 60:
+                        if remainingGuesses > 0:
+                            score *= 10
+                        elif percentCorrect >= .75:
+                            score *= 5
+                        elif percentCorrect >= .5:
+                            score *= 3
+                        elif percentCorrect >= .25:
+                            score *= 1.5
+                    elif totaltime < 120:
+                        if remainingGuesses > 0:
+                            score *= 5
+                        elif percentCorrect >= .75:
+                            score *= 3
+                        elif percentCorrect >= .5:
+                            score *= 1.5
+                        elif percentCorrect >= .25:
+                            score *= 1.1
+                    
+                    elif totaltime < 180:
+                        if remainingGuesses > 0:
+                            score *= 2
+                        elif percentCorrect >= .75:
+                            score *= 1.5
+                        elif percentCorrect >= .5:
+                            score *= 1.1
+                        elif percentCorrect >= .25:
+                            score *= 1.05
+                            
+                    print("Your total score is: ", score)
+                    if score > 200:
+                        print("OMG! You are a god at Hangman!")
+                    elif score > 150:
+                        print("You are pretty amazing!")
+                    elif score > 100:
+                        print("You are pretty good at this!")
+                    elif score > 75:
+                        print("You are OK at this game.")
+                    elif score > 50:
+                        print("You are meh...")
+                    elif score > 10:
+                        print("Nice Try, but not good enough!")
+                    else:
+                        print("Sorry to say, but you're TRASH")
+                        
+                    playagainInput = input("Want to play again(yes/no)?")
+                    playagainInput = playagainInput[0].lower()
+                    if playagainInput == "n":
+                        PlayAgain = False
+                        if timesplayed == 1:
+                            timesplayedword = "round"
+                        else:
+                            timesplayedword = "rounds"
+                    else:
+                        secretWord = chooseWord(wordlist).lower()
+                        timesplayed += 1                     
+secretWord = chooseWord(wordlist).lower()
+hangman(secretWord)
+                        
+                            
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
