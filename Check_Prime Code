@@ -1,0 +1,20 @@
+def checkPrime(num):
+    for checknumber in range(2,num):
+        if num == 1 or num == 2:
+            return True
+        if num % checknumber == 0:
+            return False
+    return True
+
+def getNextPrimeNumber(lastPrimeNumber):
+    newnumber = lastPrimeNumber + 1
+    while True:
+        if checkPrime(newnumber) == True:
+            return newnumber
+        newnumber +=1
+        
+def genPrimes():
+    number = 1
+    while True:
+        number = getNextPrimeNumber(number)
+        yield number
