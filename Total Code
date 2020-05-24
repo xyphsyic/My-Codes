@@ -1,0 +1,20 @@
+#include <conio.h>
+#include <stdio.h>
+
+void main()
+{
+
+       int no1,no2,tot;
+
+       no1=2;
+       no2=4;
+
+       tot=no1+no2;
+
+       printf("NO1:%d", no1);
+       printf("\n NO2:%d", no2);
+       printf("\n Total:%d", tot);
+
+getch();
+
+}
